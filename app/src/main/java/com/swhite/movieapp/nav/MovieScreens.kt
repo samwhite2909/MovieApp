@@ -4,6 +4,7 @@ enum class MovieScreens {
     HomeScreen,
     DetailsScreen;
 
+    //Handles routes for navigation to the different screens.
     companion object {
         fun fromRoute(route: String?): MovieScreens = when (route?.substringBefore("/")) {
             HomeScreen.name -> HomeScreen

@@ -1,5 +1,6 @@
 package com.swhite.movieapp.model
 
+//Model class with dummy data for showing some movies.
 data class Movie(
     val id: String,
     val title: String,

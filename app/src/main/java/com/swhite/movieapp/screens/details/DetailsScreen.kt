@@ -1,38 +1,35 @@
 package com.swhite.movieapp.screens.details
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
-import com.swhite.movieapp.model.Movie
+import com.swhite.movieapp.R
 import com.swhite.movieapp.model.getMovies
+import com.swhite.movieapp.widgets.HorizontalScrollableImageView
 import com.swhite.movieapp.widgets.MovieRow
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+//Additional details for a movie screen.
 @Composable
 fun DetailsScreen(
     navController: NavController,
     movieId: String?
 ) {
+    //Gets the movie from the list of movies to display.
     val newMovieList = getMovies().filter { movie ->
         movie.id == movieId
     }
-
+    //Setting up the app bar.
     Scaffold(topBar = {
         TopAppBar(
-            backgroundColor = Color.LightGray,
+            backgroundColor = MaterialTheme.colors.background,
             elevation = 5.dp
         ) {
             Row(
@@ -40,16 +37,17 @@ fun DetailsScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Arrow Back",
+                    contentDescription = stringResource(R.string.arrow_back),
                     modifier = Modifier.clickable {
+                        //Go back to the last screen shown using the nav controller.
                         navController.popBackStack()
                     })
                 Spacer(
-                    modifier = Modifier.width(100.dp)
+                    modifier = Modifier.width(20.dp)
                 )
             }
             Text(
-                text = "Movies"
+                text = stringResource(R.string.movies)
             )
         }
     }) {
@@ -62,31 +60,13 @@ fun DetailsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
+                //Display the movie card again, along with additional images.
                 MovieRow(movie = newMovieList.first())
                 Spacer(modifier = Modifier.height(8.dp))
                 Divider()
-                HorizonalScrollableImageView(newMovieList)
-            }
-        }
-    }
-
-
-}
-
-@Composable
-fun HorizonalScrollableImageView(newMovieList: List<Movie>) {
-    LazyRow {
-        items(newMovieList[0].images) { image ->
-            Card(
-                modifier = Modifier
-                    .padding(12.dp)
-                    .size(240.dp), elevation = 5.dp
-            ) {
-                Image(
-                    painter = rememberImagePainter(data = image),
-                    contentDescription = "Movie image"
-                )
+                HorizontalScrollableImageView(newMovieList)
             }
         }
     }
 }
+

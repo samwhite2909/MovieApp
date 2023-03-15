@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="arrow_back">Arrow Back</string>
+    <string name="movies">Movies</string>
+    <string name="movie_image">Movie image</string>
+    <string name="down_arrow">Down arrow</string>
 </resources>
